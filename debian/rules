@@ -7,7 +7,9 @@
 PACKAGE_NAME:=`dh_listpackages`
 
 override_dh_installsystemd:
-	dh_installsystemd --name=matrix-synapse
+	dh_installsystemd --name=matrix-synapse matrix-synapse.target
+	dh_installsystemd --no-enable --no-start --name=matrix-synapse matrix-synapse.service
+	dh_installsystemd --no-enable --no-start --name=matrix-synapse-worker@ matrix-synapse-worker@.service
 
 # we don't really want to strip the symbols from our object files.
 override_dh_strip:

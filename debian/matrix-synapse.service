@@ -1,8 +1,13 @@
 [Unit]
 Description=Synapse Matrix homeserver
 
+# This service should be restarted when the synapse target is restarted.
+PartOf=matrix-synapse.target
+ReloadPropagatedFrom=matrix-synapse.target
+
 [Service]
 Type=notify
+NotifyAccess=main
 User=matrix-synapse
 WorkingDirectory=/var/lib/matrix-synapse
 ExecStartPre=/opt/venvs/matrix-synapse/bin/python -m synapse.app.homeserver --config-path=/etc/matrix-synapse/homeserver.yaml --config-path=/etc/matrix-synapse/conf.d/ --generate-keys
@@ -16,6 +21,3 @@ SyslogIdentifier=matrix-synapse
 # is for backwards compatibility only. Please use your homeserver.yaml if
 # possible.
 EnvironmentFile=-/etc/default/matrix-synapse
-
-[Install]
-WantedBy=multi-user.target

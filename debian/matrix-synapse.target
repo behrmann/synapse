@@ -1,6 +1,7 @@
 [Unit]
 Description=Synapse parent target
 After=network.target
+Wants=matrix-synapse.service
 
 [Install]
 WantedBy=multi-user.target
